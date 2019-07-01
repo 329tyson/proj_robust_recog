@@ -1,16 +1,23 @@
 {
-    "imagepath": "/data/CUB_200_2011/images/",
-    "train_label": "/data/CUB_200_2011/labels/label_train_cub200_2011.csv",
-    "test_label": "/data/CUB_200_2011/labels/label_val_cub200_2011.csv",
-    "model_type": "alexnet",
+    "batch_size": 128,
     "dataset_type": "cub",
-    "num_classes": 200,
+    "epochs": 1000,
     "experiment_type": "SingleRes",
+    "imagepath": "/data/CUB_200_2011/images/",
     "lr": 0.001,
     "lr_decay": 20,
-    "batch_size": 128,
-    "epochs": 1000,
-    "mean": [0.485, 0.456, 0.406],
-    "std": [0.229, 0.224, 0.225],
-    "pretrain_path":"/home/tony/cv_projects/proj_robust_recog/pipeline/pretrained_models/bvlc_alexnet.npy"
+    "mean": [
+        0.485,
+        0.456,
+        0.406
+    ],
+    "model_type": "alexnet",
+    "num_classes": 200,
+    "std": [
+        0.229,
+        0.224,
+        0.225
+    ],
+    "test_label": "/data/CUB_200_2011/labels/label_val_cub200_2011.csv",
+    "train_label": "/data/CUB_200_2011/labels/label_train_cub200_2011.csv"
 }
