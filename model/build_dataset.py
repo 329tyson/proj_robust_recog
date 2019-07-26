@@ -2,7 +2,7 @@ import os
 
 from torch.utils import data
 from datasets.transforms import build_transforms
-from datasets.utils import load_label
+from datasets.utils import load_file
 from datasets.pil_augmentation import get_image
 from datasets.pil_augmentation import crop_to_bounding_box
 # from datasets.cv2_augmentation import get_image
@@ -43,14 +43,12 @@ class CUB200_2011(DatasetWrapper):
         image = crop_to_bounding_box(image, self.bbox[idx])
         label = self.labels[idx]
         if self.is_kd is True:
-            # TODO implement is_kd && train
             return self.basic_transform(image), self.preprocess(image), label
         else:
-            # TODO implement not is_kd && train / validation
             return self.preprocess(image), label
 
     def read_data_paths(self):
-        for row in load_label(self.labelpath):
+        for row in load_file(self.labelpath):
             self.filepaths.append(os.path.join(self.imagepath, row[0]))
             self.bbox.append((int(row[1]), int(row[2]), int(row[3]), int(row[4])))
             self.labels.append(int(row[5]))
@@ -66,18 +64,16 @@ def _build_cub_dataset(
     shuffle=True,
     num_workers=6,
     drop_last=True,
-    input_shape=(256, 256),
-    crop_size=(227, 227),
+    input_shape=(312, 312),
+    crop_size=(299, 299),
     is_kd=False,
     is_test=False,
 ):
-    # TODO implement add preprocess HERE!!
     params = {"batch_size": batch_size,
               "shuffle": shuffle,
               "num_workers": num_workers,
               "drop_last": drop_last}
 
-    # TODO implement kd-aware dataset generator
     print("SPECIFIC PREPROCESS")
     preprocess = build_transforms(
         input_shape=input_shape,

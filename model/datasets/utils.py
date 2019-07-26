@@ -74,7 +74,7 @@ def _load_mat(mat_file_path):
     pass
 
 
-def load_label(file_path):
+def load_file(file_path):
     if file_path.endswith("csv"):
         return _load_csv(file_path)
 

@@ -2,6 +2,9 @@ import torch
 import numpy as np
 import torch.nn as nn
 import torchvision.utils as vutils
+
+from utils import myCustomPbar
+
 from tqdm import tqdm
 from tensorboardX import SummaryWriter
 
@@ -28,16 +31,16 @@ def single_res_training(
     writer = SummaryWriter()
     print("start training")
     for epoch in range(epochs):
-        # TODO implement training
         model.train()
         decay_lr(optimizer, epoch, lr_decay, 0.001)
 
-        pbar = tqdm(
-            enumerate(train_loader),
-            desc="[EPOCH {}]".format(epoch + 1),
-            bar_format="{desc:<5} [B {n_fmt}] [R {rate_fmt}] [loss {postfix[0][loss]}]",
-            postfix=[dict(loss=0.)],
-        )
+        # pbar = tqdm(
+            # enumerate(train_loader),
+            # desc="[EPOCH {}]".format(epoch + 1),
+            # bar_format="{desc:<5} [B {n_fmt}] [R {rate_fmt}] [loss {postfix[0][loss]}]",
+            # postfix=[dict(loss=0.)],
+        # )
+        pbar = myCustomPbar(f"[EPOCH {epoch+1}]", train_loader)
         for i, (x, y) in pbar:
             x_val = x.cuda().float()
             y_val = y.cuda() - 1

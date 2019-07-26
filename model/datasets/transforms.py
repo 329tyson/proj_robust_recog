@@ -3,6 +3,8 @@ import torch
 
 from PIL import Image
 
+from utils import getlogger
+
 
 def _distillation_transform(
     input_shape: tuple,
@@ -13,6 +15,7 @@ def _distillation_transform(
     low_ratio=None,
     is_test=False,
 ):
+    logger = getlogger()
     transform_list = []
     transform_list.append(transforms.Resize(input_shape, interpolation=Image.BICUBIC))
 
@@ -25,8 +28,8 @@ def _distillation_transform(
         transform_list.append(transforms.Lambda(lambda crops: torch.stack([transforms.ToTensor()(crop) for crop in crops])))
         transform_list.append(transforms.Lambda(lambda images: torch.stack([transforms.Normalize(mean=mean, std=std)(image) for image in images])))
         for t in transform_list:
-            print("Transform : {}".format(t))
-        print("\n")
+            logger.info("Transform : {}".format(t))
+        logger.info("\n")
         return transforms.Compose(transform_list)
 
     else:
@@ -37,8 +40,8 @@ def _distillation_transform(
     transform_list.append(transforms.Normalize(mean=mean, std=std))
 
     for t in transform_list:
-        print("Transform : {}".format(t))
-    print("\n")
+        logger.info("Transform : {}".format(t))
+    logger.info("\n")
 
     transform = transforms.Compose(transform_list)
 

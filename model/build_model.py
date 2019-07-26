@@ -1,10 +1,5 @@
+import torch.nn as nn
 import torchvision.models as models
-# from clfnets.alexnet import build_alexnet
-# from clfnets.alexnet_pytorch import build_alexnet
-
-# __clfnets__ = {
-    # "alexnet": build_alexnet,
-# }
 
 
 def build_model(
@@ -16,15 +11,21 @@ def build_model(
     batch_size: int = 32,
     epochs: int = 1000,
     pretrain_path: str = "",
-    message: str = "",
+    desc: str = "",
     save: bool = False,
 ):
 
-    # return __clfnets__[model_type](classes=num_classes, pretrained=True)
-    pretrained_model =  models.alexnet(pretrained=True)
-    model = models.alexnet(pretrained=False, num_classes=200)
-    pretrained_weights = pretrained_model.state_dict()
-    pretrained_weights.pop("classifier.6.weight", None)
-    pretrained_weights.pop("classifier.6.bias", None)
-    model.load_state_dict(pretrained_weights, strict=False)
+    model = models.__dict__[model_type](pretrained=True, aux_logits=False)
+    # model = models.__dict__[model_type](pretrained=False, num_classes=num_classes)
+
+    # pretrained_weights = pretrained_model.state_dict()
+
+    # pop last fc for finetuning
+    # pretrained_weights.pop("classifier.6.weight", None)
+    # pretrained_weights.pop("classifier.6.bias", None)
+    # model.load_state_dict(pretrained_weights, strict=True)
+
+    # last_layer = list(model.modules())[-1]
+    model.fc = nn.Linear(2048, num_classes)
+
     return model.cuda()

@@ -19,5 +19,6 @@
         0.225
     ],
     "test_label": "/data/CUB_200_2011/labels/label_val_cub200_2011.csv",
-    "train_label": "/data/CUB_200_2011/labels/label_train_cub200_2011.csv"
+    "train_label": "/data/CUB_200_2011/labels/label_train_cub200_2011.csv",
+    "logs": "./logs/"
 }
