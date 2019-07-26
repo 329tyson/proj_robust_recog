@@ -1,9 +1,14 @@
 {
-    "batch_size": 128,
+    "imagepath": "/data/CUB_200_2011/images/",
+    "train_label": "/data/CUB_200_2011/labels/label_train_cub200_2011.csv",
+    "test_label": "/data/CUB_200_2011/labels/label_val_cub200_2011.csv",
+    "model_type": "alexnet",
     "dataset_type": "cub",
+    "batch_size": 128,
     "epochs": 1000,
     "experiment_type": "SingleRes",
-    "imagepath": "/data/CUB_200_2011/images/",
+    "logs": "./logs/",
+    "low_ratio": 25,
     "lr": 0.001,
     "lr_decay": 20,
     "mean": [
@@ -11,14 +16,10 @@
         0.456,
         0.406
     ],
-    "model_type": "alexnet",
     "num_classes": 200,
     "std": [
         0.229,
         0.224,
         0.225
-    ],
-    "test_label": "/data/CUB_200_2011/labels/label_val_cub200_2011.csv",
-    "train_label": "/data/CUB_200_2011/labels/label_train_cub200_2011.csv",
-    "logs": "./logs/"
+    ]
 }
