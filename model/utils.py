@@ -1,4 +1,7 @@
 import logging
+import subprocess
+
+import numpy as np
 
 from tqdm import tqdm
 from typing import NamedTuple
@@ -49,6 +52,11 @@ def _file_handler(filename):
     return logging.FileHandler(filename)
 
 
+def _set_visible_devices(num=0):
+    os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
+    os.environ["CUDA_VISIBLE_DEVICES"]=str(num)
+
+
 def getlogger():
     return logging.getLogger(__name__)
 
@@ -80,3 +88,17 @@ def myCustompbar(description, loader, background=True):
         bar_format="{desc:<5} [B {n_fmt}] [R {rate_fmt}] [loss {postfix[0][loss]:.3f}] ({postfix[0][live]:.3f})",
         postfix=[dict(loss=0., live=0.)],
     )
+
+
+def available_gpu():
+    gpu_info = subprocess.run(
+        args="nvidia-smi | grep Default | cut -d '|' -f 3",
+        shell=True,
+        stdout=subprocess.PIPE
+    )
+    gpu_info = gpu_info.stdout.decode("ascii")
+    gpu_mem = [x.split()[2] for x in gpu_info.split("\n")[:-1]]
+
+    device_num = np.argmax(np.array(gpu_mem))
+    _set_visible_devices(device_num)
+    return device_num
