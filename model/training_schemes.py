@@ -3,7 +3,8 @@ import numpy as np
 import torch.nn as nn
 import torchvision.utils as vutils
 
-from utils import myCustomPbar
+from utils import myCustompbar
+from utils import getlogger
 
 from tqdm import tqdm
 from tensorboardX import SummaryWriter
@@ -28,8 +29,9 @@ def single_res_training(
     test_loader,
     loss_function,
 ):
+    logger = getlogger()
     writer = SummaryWriter()
-    print("start training")
+    logger.info("start training")
     for epoch in range(epochs):
         model.train()
         decay_lr(optimizer, epoch, lr_decay, 0.001)
@@ -40,7 +42,7 @@ def single_res_training(
             # bar_format="{desc:<5} [B {n_fmt}] [R {rate_fmt}] [loss {postfix[0][loss]}]",
             # postfix=[dict(loss=0.)],
         # )
-        pbar = myCustomPbar(f"[EPOCH {epoch+1}]", train_loader)
+        pbar = myCustompbar(f"[EPOCH {epoch+1}]", train_loader)
         for i, (x, y) in pbar:
             x_val = x.cuda().float()
             y_val = y.cuda() - 1
@@ -79,7 +81,7 @@ def single_res_training(
                 output = output.cpu().detach().numpy()
                 if np.argmax(output) == y_val:
                     hit = hit + 1
-            print("hit : {}/{}, rate: {}%\n".format(hit, len(test_loader), float(hit / len(test_loader) * 100)))
+            logger.info("hit : {}/{}, rate: {}%\n".format(hit, len(test_loader), float(hit / len(test_loader) * 100)))
 
 
 def knowledge_distillation_training():

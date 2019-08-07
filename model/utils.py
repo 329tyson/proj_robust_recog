@@ -1,3 +1,4 @@
+import os
 import logging
 import subprocess
 
@@ -65,6 +66,7 @@ def myLogger(filename, test=False):
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
 
+    filename = os.path.join(os.getcwd(), filename)
     if test:
         # only print to stdout when testing
         logger.addHandler(streamHandler)
@@ -83,7 +85,7 @@ def myCustompbar(description, loader, background=True):
         return loader
 
     return tqdm(
-        enumerate(loader),
+        loader,
         desc=description,
         bar_format="{desc:<5} [B {n_fmt}] [R {rate_fmt}] [loss {postfix[0][loss]:.3f}] ({postfix[0][live]:.3f})",
         postfix=[dict(loss=0., live=0.)],

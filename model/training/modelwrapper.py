@@ -1,6 +1,9 @@
 import torch
+
 import torch.nn as nn
 import torch.optim as optim
+
+from tqdm import tqdm
 
 from utils import TrainingConfig
 from utils import AverageMeter
@@ -25,9 +28,9 @@ class ModelWrapper:
     def train(self, epoch):
         monitor = AverageMeter()
         self.model.train()
-        pbar = myCustomPbar(self._display_header(epoch), self.train_loader)
+        pbar = myCustompbar(self._display_header(epoch), self.train_loader)
 
-        for i, data in pbar:
+        for data in pbar:
             x_input = self.fetch_input(data)
             y_label = self.fetch_label(data)
 
@@ -35,8 +38,10 @@ class ModelWrapper:
             output = self.model(x_input)
             loss = self.fetch_loss(output, y_label)
             monitor.update(loss.item())
-            pbar.postfix[0]["loss"] = monitor.avg
-            pbar.postfix[0]["live"] = loss.item()
+
+            if isinstance(pbar, tqdm):
+                pbar.postfix[0]["loss"] = monitor.avg
+                pbar.postfix[0]["live"] = loss.item()
 
             loss.backward()
             self.optimizer.step()
@@ -48,9 +53,9 @@ class ModelWrapper:
         total = 0
         self.model.eval()
         with torch.no_grad():
-            pbar = myCustomPbar(self._display_header(epoch), self.valid_loader)
+            pbar = myCustompbar(self._display_header(epoch), self.valid_loader)
 
-            for i, data in pbar:
+            for data in pbar:
                 x_input = self.fetch_input(data)
                 y_label = self.fetch_label(data)
 
@@ -60,8 +65,10 @@ class ModelWrapper:
                     total += 1
 
                 monitor.update(loss.item())
-                pbar.postfix[0]["loss"] = monitor.avg
-                pbar.postfix[0]["live"] = loss.item()
+
+                if isinstance(pbar, tqdm):
+                    pbar.postfix[0]["loss"] = monitor.avg
+                    pbar.postfix[0]["live"] = loss.item()
             self.lr_scheduler.step(monitor.avg)
             # log some output
             self.logger.info(f"[VALID {epoch+1} loss : {monitor.avg}]")

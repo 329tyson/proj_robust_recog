@@ -15,17 +15,7 @@ def build_model(
     save: bool = False,
 ):
 
-    model = models.__dict__[model_type](pretrained=True, aux_logits=False)
-    # model = models.__dict__[model_type](pretrained=False, num_classes=num_classes)
-
-    # pretrained_weights = pretrained_model.state_dict()
-
-    # pop last fc for finetuning
-    # pretrained_weights.pop("classifier.6.weight", None)
-    # pretrained_weights.pop("classifier.6.bias", None)
-    # model.load_state_dict(pretrained_weights, strict=True)
-
-    # last_layer = list(model.modules())[-1]
-    model.fc = nn.Linear(2048, num_classes)
+    model = models.__dict__[model_type](pretrained=True)
+    model.classifier[6] = nn.Linear(4096, num_classes)
 
     return model.cuda()
