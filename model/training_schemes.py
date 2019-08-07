@@ -3,7 +3,7 @@ import numpy as np
 import torch.nn as nn
 import torchvision.utils as vutils
 
-from utils import myCustompbar
+from utils import config_pbar
 from utils import getlogger
 
 from tqdm import tqdm
@@ -42,7 +42,7 @@ def single_res_training(
             # bar_format="{desc:<5} [B {n_fmt}] [R {rate_fmt}] [loss {postfix[0][loss]}]",
             # postfix=[dict(loss=0.)],
         # )
-        pbar = myCustompbar(f"[EPOCH {epoch+1}]", train_loader)
+        pbar = config_pbar(f"[EPOCH {epoch+1}]", train_loader)
         for i, (x, y) in pbar:
             x_val = x.cuda().float()
             y_val = y.cuda() - 1

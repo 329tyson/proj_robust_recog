@@ -8,7 +8,7 @@ from tqdm import tqdm
 from utils import TrainingConfig
 from utils import AverageMeter
 from utils import getlogger
-from utils import myCustompbar
+from utils import config_pbar
 
 class ModelWrapper:
     def __init__(self, config: TrainingConfig):
@@ -28,7 +28,7 @@ class ModelWrapper:
     def train(self, epoch):
         monitor = AverageMeter()
         self.model.train()
-        pbar = myCustompbar(self._display_header(epoch), self.train_loader)
+        pbar = config_pbar(self._display_header(epoch), self.train_loader)
 
         for data in pbar:
             x_input = self.fetch_input(data)
@@ -53,7 +53,7 @@ class ModelWrapper:
         total = 0
         self.model.eval()
         with torch.no_grad():
-            pbar = myCustompbar(self._display_header(epoch), self.valid_loader)
+            pbar = config_pbar(self._display_header(epoch), self.valid_loader)
 
             for data in pbar:
                 x_input = self.fetch_input(data)

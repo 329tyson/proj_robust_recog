@@ -8,7 +8,7 @@ from datetime import datetime
 from typing import NamedTuple
 
 from tester import Test
-from utils import myLogger
+from utils import config_logger
 from utils import getlogger
 from utils import TrainingConfig
 from build_model import build_model
@@ -129,7 +129,7 @@ if __name__ == "__main__":
 
     loggername = datetime.now().strftime(f"D%d_%H:%M:%S_{args.desc}.log")
     loggername = os.path.join(args.logs, loggername)
-    logger = myLogger(args.logfile, args.test)
+    logger = config_logger(args.logfile, args.test)
 
     assert os.environ.get("CONFIG_PATH") is not None
 

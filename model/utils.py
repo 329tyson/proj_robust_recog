@@ -62,7 +62,7 @@ def getlogger():
     return logging.getLogger(__name__)
 
 
-def myLogger(filename, test=False):
+def config_logger(filename, test=False):
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
 
@@ -80,7 +80,7 @@ def myLogger(filename, test=False):
     return logger
 
 
-def myCustompbar(description, loader, background=True):
+def config_pbar(description, loader, background=True):
     if background:
         return loader
 
