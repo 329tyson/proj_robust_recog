@@ -45,11 +45,11 @@ class AverageMeter(object):
         self.avg = self.sum / self.count
 
 
-def _stream_handler():
+def _streamHandler():
     return logging.StreamHandler()
 
 
-def _file_handler(filename):
+def _fileHandler(filename):
     return logging.FileHandler(filename)
 
 
@@ -69,10 +69,10 @@ def config_logger(filename, test=False):
     filename = os.path.join(os.getcwd(), filename)
     if test:
         # only print to stdout when testing
-        logger.addHandler(streamHandler)
+        logger.addHandler(_streamHandler())
         return logger
 
-    fileHandler = _file_handler(filename)
+    fileHandler = _fileHandler(filename)
     fileHandler.setLevel(logging.INFO)
 
     logger.addHandler(fileHandler)
