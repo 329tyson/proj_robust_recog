@@ -25,8 +25,11 @@ def _distillation_transform(
 
     if is_test is True:
         transform_list.append(transforms.TenCrop(crop_size))
-        transform_list.append(transforms.Lambda(lambda crops: torch.stack([transforms.ToTensor()(crop) for crop in crops])))
-        transform_list.append(transforms.Lambda(lambda images: torch.stack([transforms.Normalize(mean=mean, std=std)(image) for image in images])))
+        transform_list.append(transforms.Lambda(lambda crops:
+                                                torch.stack([transforms.ToTensor()(crop) for crop in crops])))
+        transform_list.append(transforms.Lambda(lambda images:
+                                                torch.stack([transforms.Normalize(mean=mean, std=std)(image)
+                                                             for image in images])))
         for t in transform_list:
             logger.info("Transform : {}".format(t))
         logger.info("\n")

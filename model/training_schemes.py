@@ -19,6 +19,7 @@ def decay_lr(optimizer, epoch, lr_decay, init_lr):
     if origin_lr != next_lr:
         print("lr decayed to {}".format(next_lr))
 
+
 def single_res_training(
     epochs,
     model,

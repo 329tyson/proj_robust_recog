@@ -16,11 +16,14 @@ def _load_weight_from_numpy(model, pretrain_path, fit=True, encoding=None):
     fc_count = 0
     for layer_name, layer_weight in sorted(layer_weight_iteritems):
         if 'conv' in layer_name:
-            model_state["features." + str(conv_list[conv_count]) + ".weight"] = torch.from_numpy(layer_weight[0].transpose(3, 2, 0, 1))
-            model_state["features." + str(conv_list[conv_count]) + ".bias"] = torch.from_numpy(layer_weight[1])
+            model_state["features." + str(conv_list[conv_count]) + ".weight"] = \
+                torch.from_numpy(layer_weight[0].transpose(3, 2, 0, 1))
+            model_state["features." + str(conv_list[conv_count]) + ".bias"] = \
+                torch.from_numpy(layer_weight[1])
             conv_count = conv_count + 1
         elif 'fc' in layer_name:
-            model_state["classifier." + str(fc_list[fc_count]) + ".weight"] = torch.from_numpy(layer_weight[0].transpose(1, 0))
+            model_state["classifier." + str(fc_list[fc_count]) + ".weight"] = \
+                torch.from_numpy(layer_weight[0].transpose(1, 0))
             model_state["classifier." + str(fc_list[fc_count]) + ".bias"] = torch.from_numpy(layer_weight[1])
             fc_count = fc_count + 1
     model.load_state_dict(model_state, strict=fit)

@@ -5,7 +5,6 @@ import torch.optim as optim
 import torch.nn as nn
 
 from datetime import datetime
-from typing import NamedTuple
 
 from tester import Test
 from utils import config_logger
@@ -23,8 +22,9 @@ __experiment__ = {
     "KDTraining": knowledge_distillation_training,
 }
 
+
 def main(args):
-    loggger = getlogger()
+    logger = getlogger()
     logger.info("\nGENERATING MODEL")
     model = build_model(
         model_type=args.model_type,
@@ -76,16 +76,6 @@ def main(args):
     logger.info(default_optimizer)
     Test(model, [train_loader, test_loader])
 
-    # __experiment__[args.experiment_type](
-        # epochs=args.epochs,
-        # model=model,
-        # optimizer=default_optimizer,
-        # init_lr=args.lr,
-        # lr_decay=args.lr_decay,
-        # train_loader=train_loader,
-        # test_loader=test_loader,
-        # loss_function=nn.CrossEntropyLoss(),
-    # )
     Baseline(
         TrainingConfig(
             model=model,
@@ -97,6 +87,7 @@ def main(args):
             criterion=nn.CrossEntropyLoss(),
         )
     )
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

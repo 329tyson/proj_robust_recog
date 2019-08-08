@@ -20,6 +20,7 @@ model.__dict__ contains ...
 for more information, visit https://pytorch.org/docs/stable/torchvision/models.html
 '''
 
+
 def build_model(
     model_type: str = "alexnet",
     experiment_type: str = "SingleRes",

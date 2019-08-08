@@ -54,8 +54,8 @@ def _fileHandler(filename):
 
 
 def _set_visible_devices(num=0):
-    os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"]=str(num)
+    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+    os.environ["CUDA_VISIBLE_DEVICES"] = str(num)
 
 
 def getlogger():
