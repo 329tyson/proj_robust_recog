@@ -7,4 +7,4 @@ logfile=${logdir}/${dt}_${desc}.log
 touch ${logfile}
 python trainer.py --epochs 100 --logfile ${logfile} &>/dev/null &
 
-multitail ${logfile}
+multitail -n 1000 ${logfile}
