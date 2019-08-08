@@ -47,6 +47,7 @@ class ModelWrapper:
             loss.backward()
             self.optimizer.step()
         # log some output
+        self.lr_scheduler.step(monitor.avg)
         self.logger.info(f"[TRAIN {epoch+1} loss : {monitor.avg:.3f}]")
 
     def validate(self, epoch):
