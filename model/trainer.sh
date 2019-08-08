@@ -5,6 +5,6 @@ logdir=logs
 logfile=${logdir}/${dt}_${desc}.log
 
 touch ${logfile}
-python trainer.py --epochs 1 --logfile ${logfile} &>/dev/null &
+python trainer.py --epochs 100 --logfile ${logfile} &>/dev/null &
 
 multitail ${logfile}
