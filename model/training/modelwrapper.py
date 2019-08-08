@@ -1,3 +1,4 @@
+import time
 import torch
 
 import torch.nn as nn
@@ -46,7 +47,7 @@ class ModelWrapper:
             loss.backward()
             self.optimizer.step()
         # log some output
-        self.logger.info(f"[TRAIN {epoch+1} loss : {monitor.avg}]")
+        self.logger.info(f"[TRAIN {epoch+1} loss : {monitor.avg:.3f}]")
 
     def validate(self, epoch):
         monitor = AverageMeter()
@@ -69,15 +70,19 @@ class ModelWrapper:
                 if isinstance(pbar, tqdm):
                     pbar.postfix[0]["loss"] = monitor.avg
                     pbar.postfix[0]["live"] = loss.item()
-            self.lr_scheduler.step(monitor.avg)
+            # self.lr_scheduler.step(monitor.avg)
             # log some output
-            self.logger.info(f"[VALID {epoch+1} loss : {monitor.avg}]")
+            self.logger.info(f"[VALID {epoch+1} loss : {monitor.avg:3.f}]")
             self.logger.info(f"[HIT: {total}/{len(self.valid_loader)} ACC: {total/len(self.valid_loader)*100:.2f}]\n")
 
     def iterate(self):
+        start = time.time()
         for epoch in range(self.epochs):
             self.train(epoch)
             self.validate(epoch)
+        end = time.time()
+        time_spent = end - start
+        self.logger.info(f"[Time {time_spent:.3f}({time_spent / self.epochs:.3f} for epoch)")
 
     def _display_header(self, epoch):
         return f"[EPOCH {epoch + 1}]"
