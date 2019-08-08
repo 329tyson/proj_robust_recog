@@ -19,7 +19,6 @@ touch ${logfile}
 
 cmd="python trainer.py --epochs 100 --logfile ${logfile}"
 
-echo ${front}
 if [ ${front} ]; then
     ${cmd}
     rm ${logfile}
