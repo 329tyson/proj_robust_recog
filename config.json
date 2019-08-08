@@ -4,7 +4,7 @@
     "test_label": "/data/CUB_200_2011/labels/label_val_cub200_2011.csv",
     "model_type": "alexnet",
     "dataset_type": "cub",
-    "batch_size": 128,
+    "batch_size": 256,
     "epochs": 1000,
     "experiment_type": "SingleRes",
     "logs": "./logs/",

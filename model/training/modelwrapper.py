@@ -72,7 +72,7 @@ class ModelWrapper:
             self.lr_scheduler.step(monitor.avg)
             # log some output
             self.logger.info(f"[VALID {epoch+1} loss : {monitor.avg}]")
-            self.logger.info(f"[HIT: {total}/{len(self.valid_loader)} ACC: {total/len(self.valid_loader)*100:.2f}]")
+            self.logger.info(f"[HIT: {total}/{len(self.valid_loader)} ACC: {total/len(self.valid_loader)*100:.2f}]\n")
 
     def iterate(self):
         for epoch in range(self.epochs):

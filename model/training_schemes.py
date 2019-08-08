@@ -36,12 +36,6 @@ def single_res_training(
         model.train()
         decay_lr(optimizer, epoch, lr_decay, 0.001)
 
-        # pbar = tqdm(
-            # enumerate(train_loader),
-            # desc="[EPOCH {}]".format(epoch + 1),
-            # bar_format="{desc:<5} [B {n_fmt}] [R {rate_fmt}] [loss {postfix[0][loss]}]",
-            # postfix=[dict(loss=0.)],
-        # )
         pbar = config_pbar(f"[EPOCH {epoch+1}]", train_loader)
         for i, (x, y) in pbar:
             x_val = x.cuda().float()
