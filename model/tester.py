@@ -23,7 +23,7 @@ def _test_convnet(model, num_classes=200, criterion=nn.CrossEntropyLoss().cuda()
     test_optimizer.zero_grad()
 
     # generate test image, label
-    test_image = np.ones((1, 3, 299, 299))
+    test_image = np.ones((1, 3, 224, 224))
     test_image = torch.Tensor(test_image).cuda()
     test_label = torch.ones((1), dtype=torch.long).cuda()
 

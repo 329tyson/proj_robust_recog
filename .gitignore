@@ -1,4 +1,4 @@
 pretrained_models/
-model/runs/
-model/logs/
+*runs/
+*logs/
 *.ipynb

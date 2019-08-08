@@ -1,5 +1,4 @@
 import torch
-import torch.nn as nn
 
 from utils import TrainingConfig
 from training.modelwrapper import ModelWrapper
@@ -10,7 +9,8 @@ class Baseline(ModelWrapper):
         super(Baseline, self).__init__(config)
 
     def fetch_input(self, data):
-        x, _ = data
+        if len(data) > 1:
+            x, _ = data
         x = torch.squeeze(x)
         return x.cuda().float()
 

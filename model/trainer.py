@@ -7,8 +7,8 @@ import torch.nn as nn
 from datetime import datetime
 from typing import NamedTuple
 
-from testrun import Test
-from utils import mylogger
+from tester import Test
+from utils import config_logger
 from utils import getlogger
 from utils import TrainingConfig
 from build_model import build_model
@@ -98,7 +98,7 @@ def main(args):
         )
     )
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--imagepath", type=str)
     parser.add_argument("--train_label", type=str)
@@ -120,6 +120,7 @@ if __name__ == '__main__':
     parser.add_argument("--kd", action="store_true")
     parser.add_argument("--save", action="store_true")
     parser.add_argument("--test", action="store_true")
+    parser.add_argument("--logfile", type=str, required=True)
 
     parser.set_defaults(save=False)
     parser.set_defaults(kd=False)
@@ -128,7 +129,7 @@ if __name__ == '__main__':
 
     loggername = datetime.now().strftime(f"D%d_%H:%M:%S_{args.desc}.log")
     loggername = os.path.join(args.logs, loggername)
-    logger = mylogger(loggername, args.test)
+    logger = config_logger(args.logfile, args.test)
 
     assert os.environ.get("CONFIG_PATH") is not None
 

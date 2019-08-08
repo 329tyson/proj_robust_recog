@@ -8,6 +8,8 @@ from datasets.pil_augmentation import crop_to_bounding_box
 # from datasets.cv2_augmentation import get_image
 # from datasets.cv2_augmentation import crop_to_bounding_box
 
+from utils import getlogger
+
 
 class DatasetWrapper(data.Dataset):
     def __init__(self, imagepath: str, labelpath: str, preprocess):
@@ -64,17 +66,18 @@ def _build_cub_dataset(
     shuffle=True,
     num_workers=6,
     drop_last=True,
-    input_shape=(312, 312),
-    crop_size=(299, 299),
+    input_shape=(256, 256),
+    crop_size=(224, 224),
     is_kd=False,
     is_test=False,
 ):
+    logger = getlogger()
     params = {"batch_size": batch_size,
               "shuffle": shuffle,
               "num_workers": num_workers,
               "drop_last": drop_last}
 
-    print("SPECIFIC PREPROCESS")
+    logger.info("SPECIFIC PREPROCESS")
     preprocess = build_transforms(
         input_shape=input_shape,
         crop_size=crop_size,
@@ -85,7 +88,7 @@ def _build_cub_dataset(
     )
 
     if is_kd is True:
-        print("BASIC TRANSFORM")
+        logger.info("BASIC TRANSFORM")
         basic_transform = build_transforms(
             input_shape=input_shape,
             crop_size=crop_size,
