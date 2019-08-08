@@ -72,7 +72,7 @@ class ModelWrapper:
                     pbar.postfix[0]["live"] = loss.item()
             # self.lr_scheduler.step(monitor.avg)
             # log some output
-            self.logger.info(f"[VALID {epoch+1} loss : {monitor.avg:3.f}]")
+            self.logger.info(f"[VALID {epoch+1} loss : {monitor.avg:.3f}]")
             self.logger.info(f"[HIT: {total}/{len(self.valid_loader)} ACC: {total/len(self.valid_loader)*100:.2f}]\n")
 
     def iterate(self):

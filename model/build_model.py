@@ -1,6 +1,24 @@
 import torch.nn as nn
 import torchvision.models as models
 
+'''
+For loading models defined in torchvision.models
+
+model.__dict__ contains ...
+
+    - AlexNet
+    - VGG
+    - ResNet
+    - SqueezeNet
+    - DenseNet
+    - Inception v3
+    - GoogLeNet
+    - ShuffleNet v2
+    - MobileNet v2
+    - ResNeXt
+
+for more information, visit https://pytorch.org/docs/stable/torchvision/models.html
+'''
 
 def build_model(
     model_type: str = "alexnet",
