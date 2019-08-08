@@ -8,7 +8,6 @@
     "epochs": 1000,
     "experiment_type": "SingleRes",
     "logs": "./logs/",
-    "low_ratio": 25,
     "lr": 0.001,
     "lr_decay": 20,
     "mean": [
