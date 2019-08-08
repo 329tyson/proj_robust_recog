@@ -17,7 +17,7 @@ logdir=logs
 logfile=${logdir}/${dt}_${desc}.log
 touch ${logfile}
 
-cmd="python trainer.py --epochs 100 --logfile ${logfile}"
+cmd="python trainer.py --logfile ${logfile}"
 
 if [ ${front} ]; then
     ${cmd}
